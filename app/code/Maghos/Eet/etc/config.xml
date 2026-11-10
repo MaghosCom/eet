@@ -1,0 +1,27 @@
+<?xml version="1.0"?><!--
+/**
+ *
+ * Maghos_Eet Magento 2 extension
+ *
+ * NOTICE OF LICENSE
+ *
+ * Unauthorized copying of this file, via any medium is strictly prohibited
+ * Proprietary and confidential
+ *
+ * @category Maghos
+ * @package Maghos_Eet
+ * @copyright Copyright (c) 2026 Maghos
+ * @license http://www.maghos.com/business-license
+ * @author Magento dev team <support@maghos.com>
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
+    <default>
+        <eet>
+            <eet>
+                <enabled>0</enabled>
+                <testEnv>1</testEnv>
+            </eet>
+        </eet>
+    </default>
+</config>

@@ -1,0 +1,36 @@
+---
+
+name: Prepare composer cache
+'on':
+  workflow_dispatch: ~
+  schedule:
+    - cron: '20 3 * * *'
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  composer-install:
+    name: Prepare composer dependencies
+    runs-on:
+      - self-hosted
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Checkout the code
+        uses: actions/checkout@v6
+        with:
+          repository: MaghosCom/static-analysis
+          ref: 'v2'
+          path: 'static-analysis'
+          token: ${{ secrets.SA_PAT_TOKEN }}
+
+      - name: Get composer cache
+        uses: ./static-analysis/composer-cache
+        with:
+          auth_json: ${{ secrets.AUTH_JSON }}
+          cache_name: "eet"
+          identifier: "2.4.9"
+          install_magento: true
+          magento_version: "2.4.9"

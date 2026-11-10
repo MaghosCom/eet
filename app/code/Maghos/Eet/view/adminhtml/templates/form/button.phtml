@@ -1,0 +1,49 @@
+<?php
+/**
+ *
+ * Maghos_Eet Magento 2 extension
+ *
+ * NOTICE OF LICENSE
+ *
+ * Unauthorized copying of this file, via any medium is strictly prohibited
+ * Proprietary and confidential
+ *
+ * @category Maghos
+ * @package Maghos_Eet
+ * @copyright Copyright (c) 2026 Maghos
+ * @license http://www.maghos.com/business-license
+ * @author Magento dev team <support@maghos.com>
+ */
+
+/** @var \Maghos\Eet\Block\System\Config\Form\TestButton $block */
+/** @var \Magento\Framework\Escaper $escaper */
+/** @var \Magento\Framework\View\Helper\SecureHtmlRenderer $secureRenderer */
+?>
+<?= $block->getBeforeHtml() ?>
+<button <?= /* @noEscape */ $block->getAttributesHtml(), $block->getUiId() ?>>
+    <span><?= $escaper->escapeHtml($block->getLabel()) ?></span>
+</button>
+<?= $block->getAfterHtml() ?>
+<?php $scriptString = <<<script
+    require(['jquery', 'Magento_Ui/js/modal/alert'], function ($, alert) {
+        $('button.eet-test').on('click', function () {
+            $.ajax({
+                showLoader: true,
+                url: this.value,
+                type: 'GET',
+                dataType: 'json'
+            }).done(function (data) {
+                if (data.messages) {
+                    alert({
+                        title: data.title,
+                        content: data.messages.map(function (message) {
+                            return $('<div>').text(message).html();
+                        }).join('<br /><br />')
+                    });
+                }
+            });
+        });
+    });
+script;
+?>
+<?= /* @noEscape */ $secureRenderer->renderTag('script', [], $scriptString, false) ?>

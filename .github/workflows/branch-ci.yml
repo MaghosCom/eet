@@ -1,0 +1,153 @@
+---
+
+name: Branch static analysis
+'on':
+  push:
+    branches:
+      - '**'
+      - '!master'
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  remark_lint:
+    name: Run Remark lint
+    runs-on:
+      - self-hosted
+
+    steps:
+      - name: Checkout the code
+        uses: actions/checkout@v6
+
+      - name: Checkout the code
+        uses: actions/checkout@v6
+        with:
+          repository: MaghosCom/static-analysis
+          ref: 'v2'
+          path: 'static-analysis'
+          token: ${{ secrets.SA_PAT_TOKEN }}
+
+      - name: Run linter
+        uses: ./static-analysis/remark-lint
+        with:
+          target_path: "README.md app/code/Maghos/"
+
+  composer-install:
+    name: Prepare composer dependencies
+    runs-on:
+      - self-hosted
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Checkout the code
+        uses: actions/checkout@v6
+        with:
+          repository: MaghosCom/static-analysis
+          ref: 'v2'
+          path: 'static-analysis'
+          token: ${{ secrets.SA_PAT_TOKEN }}
+
+      - name: Get composer cache
+        uses: ./static-analysis/composer-cache
+        with:
+          auth_json: ${{ secrets.AUTH_JSON }}
+          cache_name: "eet"
+          identifier: "2.4.9"
+          install_magento: true
+          magento_version: "2.4.9"
+
+  phpmd:
+    name: Run PHP Mess Detector
+    runs-on:
+      - self-hosted
+    needs: composer-install
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Checkout the code
+        uses: actions/checkout@v6
+        with:
+          repository: MaghosCom/static-analysis
+          ref: 'v2'
+          path: 'static-analysis'
+          token: ${{ secrets.SA_PAT_TOKEN }}
+
+      - name: Get composer cache
+        uses: ./static-analysis/composer-cache
+        with:
+          auth_json: ${{ secrets.AUTH_JSON }}
+          cache_name: "eet"
+          identifier: "2.4.9"
+          install_magento: true
+          magento_version: "2.4.9"
+
+      - name: Run PHPMD
+        uses: ./static-analysis/phpmd3
+        with:
+          target_path: "app/code/Maghos"
+          php_version: "8.4.10"
+
+
+  phpcs:
+    name: Run PHP Code Sniffer
+    runs-on:
+      - self-hosted
+    needs: composer-install
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Checkout the code
+        uses: actions/checkout@v6
+        with:
+          repository: MaghosCom/static-analysis
+          ref: 'v2'
+          path: 'static-analysis'
+          token: ${{ secrets.SA_PAT_TOKEN }}
+
+      - name: Get composer cache
+        uses: ./static-analysis/composer-cache
+        with:
+          auth_json: ${{ secrets.AUTH_JSON }}
+          cache_name: "eet"
+          identifier: "2.4.9"
+          install_magento: true
+          magento_version: "2.4.9"
+
+      - name: Run PHPCS
+        uses: ./static-analysis/phpcs
+        with:
+          target_path: "app/code/Maghos"
+          php_version: "8.4.10"
+
+  phpstan:
+    name: Run PHP Static Analysis Tool
+    runs-on:
+      - self-hosted
+    needs: composer-install
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Checkout the code
+        uses: actions/checkout@v6
+        with:
+          repository: MaghosCom/static-analysis
+          ref: 'v2'
+          path: 'static-analysis'
+          token: ${{ secrets.SA_PAT_TOKEN }}
+
+      - name: Get composer cache
+        uses: ./static-analysis/composer-cache
+        with:
+          auth_json: ${{ secrets.AUTH_JSON }}
+          cache_name: "eet"
+          identifier: "2.4.9"
+          install_magento: true
+          magento_version: "2.4.9"
+
+      - name: Run PHPStan
+        uses: ./static-analysis/phpstan
+        with:
+          target_path: "app/code/Maghos"
+          php_version: "8.4.10"
