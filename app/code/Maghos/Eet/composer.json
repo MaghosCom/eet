@@ -1,0 +1,21 @@
+{
+  "name": "maghos/eet",
+  "description": "Automatic sending of EET receipts for sales.",
+  "require": {
+    "php": "~7.4.0||~8.0.0||~8.1.0||~8.2.0||~8.3.0||~8.4.0",
+    "ext-curl": "*",
+    "ext-dom": "*",
+    "ext-openssl": "*"
+  },
+  "type": "magento2-module",
+  "version": "4.0.0",
+  "license": [],
+  "autoload": {
+    "files": [
+      "registration.php"
+    ],
+    "psr-4": {
+      "Maghos\\Eet\\": ""
+    }
+  }
+}

@@ -1,0 +1,54 @@
+---
+name: Branch GitHub action CI
+
+'on':
+  push:
+    paths:
+      - '.github/**'
+    branches:
+      - '**'
+      - '!master'
+
+jobs:
+  lint_actions:
+    name: Lint GitHub actions
+    runs-on:
+      - self-hosted
+
+    steps:
+      - name: Checkout the code
+        uses: actions/checkout@v6
+
+      - name: Checkout the code
+        uses: actions/checkout@v6
+        with:
+          repository: MaghosCom/static-analysis
+          ref: 'v2'
+          path: 'static-analysis'
+          token: ${{ secrets.SA_PAT_TOKEN }}
+
+      - name: Run linter
+        uses: ./static-analysis/action-lint
+
+  yaml_lint:
+    name: Run YAML lint
+    runs-on:
+      - self-hosted
+
+    steps:
+      - name: Checkout the code
+        uses: actions/checkout@v6
+
+      - name: Checkout the code
+        uses: actions/checkout@v6
+        with:
+          repository: MaghosCom/static-analysis
+          ref: 'v2'
+          path: 'static-analysis'
+          token: ${{ secrets.SA_PAT_TOKEN }}
+
+      - name: Run linter
+        uses: ./static-analysis/yaml-lint
+        with:
+          yamllint_config_path: "./static-analysis/yaml-lint/yamllint.yaml"
+          target_path: ".github"

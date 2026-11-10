@@ -1,0 +1,42 @@
+<?xml version="1.0"?><!--
+/**
+ *
+ * Maghos_Eet Magento 2 extension
+ *
+ * NOTICE OF LICENSE
+ *
+ * Unauthorized copying of this file, via any medium is strictly prohibited
+ * Proprietary and confidential
+ *
+ * @category Maghos
+ * @package Maghos_Eet
+ * @copyright Copyright (c) 2026 Maghos
+ * @license http://www.maghos.com/business-license
+ * @author Magento dev team <support@maghos.com>
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <preference for="Maghos\Eet\Api\Data\RecordInterface" type="Maghos\Eet\Model\Record"/>
+    <preference for="Maghos\Eet\Api\RecordRepositoryInterface" type="Maghos\Eet\Model\RecordRepository"/>
+    <preference for="Maghos\Eet\Api\Data\RecordSearchResultsInterface" type="Maghos\Eet\Model\RecordSearchResults"/>
+    <preference for="Maghos\Eet\Api\RecordSenderInterface" type="Maghos\Eet\Model\RecordSender"/>
+
+    <type name="Magento\Sales\Model\Order\Invoice">
+        <plugin name="imaghoseet_invoice_plugin" type="Maghos\Eet\Plugin\Sales\Model\Order\RememberDocument"/>
+    </type>
+    <type name="Magento\Sales\Model\Order\Creditmemo">
+        <plugin name="imaghoseet_creditmemo_plugin" type="Maghos\Eet\Plugin\Sales\Model\Order\RememberDocument"/>
+    </type>
+    <type name="Magento\Payment\Block\Info">
+        <plugin name="imaghoseet_info_plugin" type="Maghos\Eet\Plugin\Payment\Block\Info" sortOrder="1"/>
+    </type>
+    <type name="Magento\OfflinePayments\Block\Info\Checkmo">
+        <plugin name="imaghoseet_checkmo_plugin" type="Maghos\Eet\Plugin\Payment\Block\Info\AppendEetInfo" sortOrder="1"/>
+    </type>
+    <type name="Magento\OfflinePayments\Block\Info\Purchaseorder">
+        <plugin name="imaghoseet_purchaseorder_plugin" type="Maghos\Eet\Plugin\Payment\Block\Info\AppendEetInfo" sortOrder="1"/>
+    </type>
+    <type name="Magento\Payment\Block\Info\Instructions">
+        <plugin name="imaghoseet_instructions_plugin" type="Maghos\Eet\Plugin\Payment\Block\Info\AppendEetInfo" sortOrder="1"/>
+    </type>
+</config>

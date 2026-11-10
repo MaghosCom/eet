@@ -1,0 +1,71 @@
+<?xml version="1.0"?><!--
+/**
+ *
+ * Maghos_Eet Magento 2 extension
+ *
+ * NOTICE OF LICENSE
+ *
+ * Unauthorized copying of this file, via any medium is strictly prohibited
+ * Proprietary and confidential
+ *
+ * @category Maghos
+ * @package Maghos_Eet
+ * @copyright Copyright (c) 2026 Maghos
+ * @license http://www.maghos.com/business-license
+ * @author Magento dev team <support@maghos.com>
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <section id="eet" translate="label" sortOrder="999" showInDefault="1" showInWebsite="1" showInStore="1">
+            <label>EET</label>
+            <tab>sales</tab>
+            <resource>Maghos_Eet::manage_eet</resource>
+            <group id="eet" translate="label" type="text" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>Eet Integration</label>
+                <field id="enabled" translate="label" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Enable Eet Integation</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="testEnv" translate="label" type="select" sortOrder="15" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Test Environment</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="eic" translate="label comment" type="text" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>EIC</label>
+                    <comment>Taxpayer's registration identification number (EIČ), e.g. CZ12345678.</comment>
+                    <validate>validate-alphanum</validate>
+                </field>
+                <field id="unitId" translate="label comment" type="text" sortOrder="25" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Registrating Unit ID</label>
+                    <comment>Identifier of the registrating unit assigned in the MOJE daně (DIS+) portal.</comment>
+                    <validate>validate-digits</validate>
+                </field>
+                <field id="checkoutId" translate="label comment" type="text" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Checkout ID</label>
+                    <comment>Identification number of checkout equipment, on which revenue is registered.</comment>
+                </field>
+                <field id="certFile" translate="label comment" type="Maghos\Eet\Model\Config\Frontend\CertFileChooser" sortOrder="35" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Certificate File</label>
+                    <comment><![CDATA[Cash register certificate (.p12) issued in the MOJE daně (DIS+) portal. If it cannot be read (OpenSSL 3 without the legacy provider), upload a PEM file instead: <code>openssl pkcs12 -legacy -in cert.p12 -out cert.pem</code> and use the same password.]]></comment>
+                    <backend_model>Maghos\Eet\Model\Config\Backend\CertFile</backend_model>
+                </field>
+                <field id="certPassword" translate="label comment" type="password" sortOrder="35" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Certificate password</label>
+                    <comment>Certificate password should come with your certificate file.</comment>
+                </field>
+                <field id="paymentMethods" translate="label" type="multiselect" sortOrder="40" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Payment methods</label>
+                    <comment>EET report will be sent only for these payment methods.</comment>
+                    <source_model>Maghos\Eet\Model\Source\Payment</source_model>
+                    <validate>required-entry</validate>
+                </field>
+                <field id="testConfig" translate="label comment" type="button" sortOrder="400" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <frontend_model>Maghos\Eet\Block\System\Config\Form\Field\TestConfig</frontend_model>
+                    <label>Test EET Config</label>
+                    <comment>Save your settings before you test!</comment>
+                </field>
+            </group>
+        </section>
+    </system>
+</config>

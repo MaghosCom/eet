@@ -1,0 +1,32 @@
+2.0.0
+- initial release
+
+2.0.1
+- fixed store view specific settings
+- fixed missing title in ACL rule
+
+2.0.2
+- fixed store view specific payment methods list
+
+2.0.3
+- fixed store view values in configuration test
+- configuration test ajax popup
+- support for other base currencies
+
+2.0.4
+- fixed email instruction templates
+- fixed order view translations
+
+2.0.5
+- fixed credit card payment translation
+
+3.0.0
+- Magento 2.4.9 / Mage-OS 3.x and PHP 8.4 compatibility (PHP 7.4+ still supported)
+- shipping included in the receipt total
+
+4.0.0
+- EET 2.0 (interface v4, from 1.1.2027): own SOAP/WS-Security client
+- receipts carry only the total amount, VAT breakdown and PKP/BKP removed, POK stored instead of FIK
+- one refund receipt per credit memo with the credit memo total
+- one sale receipt per invoice with the invoice total and number
+- EET receipt shown with each invoice and credit memo in the customer account and its print pages (Luma and Hyva)

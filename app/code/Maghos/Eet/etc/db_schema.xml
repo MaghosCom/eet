@@ -1,0 +1,58 @@
+<?xml version="1.0"?><!--
+/**
+ *
+ * Maghos_Eet Magento 2 extension
+ *
+ * NOTICE OF LICENSE
+ *
+ * Unauthorized copying of this file, via any medium is strictly prohibited
+ * Proprietary and confidential
+ *
+ * @category Maghos
+ * @package Maghos_Eet
+ * @copyright Copyright (c) 2026 Maghos
+ * @license http://www.maghos.com/business-license
+ * @author Magento dev team <support@maghos.com>
+ */
+-->
+<schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Setup/Declaration/Schema/etc/schema.xsd">
+    <table name="maghos_eet_record" resource="sales" engine="innodb" comment="EET Records">
+        <column xsi:type="int" name="id" unsigned="true" nullable="false" identity="true" comment="Record ID"/>
+        <column xsi:type="int" name="order_id" unsigned="true" nullable="true" comment="Order ID"/>
+        <column xsi:type="int" name="invoice_id" unsigned="true" nullable="true" comment="Invoice ID"/>
+        <column xsi:type="int" name="creditmemo_id" unsigned="true" nullable="true" comment="Credit Memo ID"/>
+        <column xsi:type="varchar" name="eic" nullable="false" length="12" comment="Taxpayer EIC"/>
+        <column xsi:type="varchar" name="unit_id" nullable="false" length="9" comment="Registrating Unit ID"/>
+        <column xsi:type="varchar" name="register_id" nullable="false" length="20" comment="Cash Register ID"/>
+        <column xsi:type="varchar" name="receipt_number" nullable="false" length="25" comment="Receipt Number"/>
+        <column xsi:type="decimal" name="amount" scale="2" precision="10" nullable="false" default="0" comment="Amount CZK"/>
+        <column xsi:type="varchar" name="pok" nullable="true" length="39" comment="Acknowledgement Code"/>
+        <column xsi:type="smallint" name="status" unsigned="true" nullable="false" default="0" comment="Status"/>
+        <column xsi:type="boolean" name="is_refund" nullable="false" default="false" comment="Refund Flag"/>
+        <column xsi:type="datetime" name="created_at" nullable="false" comment="Created At"/>
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="id"/>
+        </constraint>
+        <constraint xsi:type="foreign" referenceId="MAGHOS_EET_RECORD_ORDER_ID_SALES_ORDER_ENTITY_ID"
+                    table="maghos_eet_record" column="order_id"
+                    referenceTable="sales_order" referenceColumn="entity_id" onDelete="SET NULL"/>
+        <constraint xsi:type="foreign" referenceId="MAGHOS_EET_RECORD_INVOICE_ID_SALES_INVOICE_ENTITY_ID"
+                    table="maghos_eet_record" column="invoice_id"
+                    referenceTable="sales_invoice" referenceColumn="entity_id" onDelete="SET NULL"/>
+        <constraint xsi:type="foreign" referenceId="MAGHOS_EET_RECORD_CREDITMEMO_ID_SALES_CREDITMEMO_ENTITY_ID"
+                    table="maghos_eet_record" column="creditmemo_id"
+                    referenceTable="sales_creditmemo" referenceColumn="entity_id" onDelete="SET NULL"/>
+        <constraint xsi:type="unique" referenceId="MAGHOS_EET_RECORD_INVOICE_ID">
+            <column name="invoice_id"/>
+        </constraint>
+        <constraint xsi:type="unique" referenceId="MAGHOS_EET_RECORD_CREDITMEMO_ID">
+            <column name="creditmemo_id"/>
+        </constraint>
+        <index referenceId="MAGHOS_EET_RECORD_ORDER_ID" indexType="btree">
+            <column name="order_id"/>
+        </index>
+        <index referenceId="MAGHOS_EET_RECORD_STATUS" indexType="btree">
+            <column name="status"/>
+        </index>
+    </table>
+</schema>

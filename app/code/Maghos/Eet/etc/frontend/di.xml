@@ -1,0 +1,31 @@
+<?xml version="1.0"?><!--
+/**
+ *
+ * Maghos_Eet Magento 2 extension
+ *
+ * NOTICE OF LICENSE
+ *
+ * Unauthorized copying of this file, via any medium is strictly prohibited
+ * Proprietary and confidential
+ *
+ * @category Maghos
+ * @package Maghos_Eet
+ * @copyright Copyright (c) 2026 Maghos
+ * @license http://www.maghos.com/business-license
+ * @author Magento dev team <support@maghos.com>
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <type name="Magento\Sales\Block\Order\Invoice\Items">
+        <plugin name="imaghoseet_invoice_items" type="Maghos\Eet\Plugin\Sales\Block\Order\Invoice\Items"/>
+    </type>
+    <type name="Magento\Sales\Block\Order\Creditmemo\Items">
+        <plugin name="imaghoseet_creditmemo_items" type="Maghos\Eet\Plugin\Sales\Block\Order\Creditmemo\Items"/>
+    </type>
+    <type name="Magento\Sales\Block\Order\PrintOrder\Invoice">
+        <plugin name="imaghoseet_print_invoice" type="Maghos\Eet\Plugin\Sales\Block\Order\PrintOrder\Invoice"/>
+    </type>
+    <type name="Magento\Sales\Block\Order\PrintOrder\Creditmemo">
+        <plugin name="imaghoseet_print_creditmemo" type="Maghos\Eet\Plugin\Sales\Block\Order\PrintOrder\Creditmemo"/>
+    </type>
+</config>
